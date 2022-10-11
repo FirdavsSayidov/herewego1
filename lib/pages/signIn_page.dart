@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:herewego/pages/services/auth_services.dart';
-import 'package:herewego/pages/services/utils_services.dart';
 import 'package:herewego/pages/signUp_page.dart';
+import '../model/pref_model.dart';
+import '../services/auth_services.dart';
+import '../services/utils_services.dart';
 import 'home_page.dart';
-import 'model/pref_model.dart';
 
 class SignInPage extends StatefulWidget {
   static final String id = "signin_page";
@@ -32,11 +32,11 @@ class _SignInPageState extends State<SignInPage> {
     });
     AuthService.signinUser(context, email, password).then((firebaseUser) =>
     {
-      _getFireBaseUser(firebaseUser!),
+      _getFireBaseUser(firebaseUser),
     });
   }
 
-  _getFireBaseUser(User firebaseUser) async {
+  _getFireBaseUser(User? firebaseUser) async {
     setState(() {
       isLoading = false;
     });
@@ -75,7 +75,9 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(height: 25),
                   Container(
                     child: OutlinedButton(
-
+                     style: OutlinedButton.styleFrom(
+                       backgroundColor: Colors.blue
+                     ),
                       onPressed: () {
                         _doSignIn();
                       },

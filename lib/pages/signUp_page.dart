@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:herewego/pages/home_page.dart';
-import 'package:herewego/pages/model/pref_model.dart';
-import 'package:herewego/pages/services/auth_services.dart';
-import 'package:herewego/pages/services/utils_services.dart';
 import 'package:herewego/pages/signIn_page.dart';
+import '../model/pref_model.dart';
+import '../services/auth_services.dart';
+import '../services/utils_services.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -17,22 +18,23 @@ class _SignUpPageState extends State<SignUpPage> {
   var nameController = TextEditingController();
   var emailController  = TextEditingController();
   var passwordController = TextEditingController();
+  var isLoading = false;
 
   doLogin(){
     String name = nameController.text.toString().trim();
     String email = emailController.text.toString().trim();
     String password = passwordController.text.toString().trim();
      setState(() {
-
+      isLoading = true;
      });
    AuthService.signUpUser(context, name, email, password).then((firebaseUser) =>
    {
      _getFirebaseUser(firebaseUser),
    });
   }
-  void _getFirebaseUser(firebaseUser) async {
+  void _getFirebaseUser(User? firebaseUser) async {
     setState(() {
-
+      isLoading = false;
     });
     if(firebaseUser != null){
       await Prefs.saveUserId(firebaseUser.uid);
@@ -59,12 +61,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 hintText: 'email',
 
               ),
-            ),  TextField(controller: passwordController,
+            ),  TextField(obscureText: true,
+              controller: passwordController,
               decoration: InputDecoration(
                 hintText: 'password',
 
               ),
             ),
+            isLoading?
+            CircularProgressIndicator():
+                SizedBox.shrink(),
             SizedBox(height: 20,),
             OutlinedButton(onPressed: (){
                        doLogin();},

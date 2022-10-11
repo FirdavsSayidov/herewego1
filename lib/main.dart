@@ -1,43 +1,57 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:herewego/pages/detail_page.dart';
 import 'package:herewego/pages/home_page.dart';
-import 'package:herewego/pages/services/utils_services.dart';
+
 import 'package:herewego/pages/signIn_page.dart';
 import 'package:herewego/pages/signUp_page.dart';
+import 'package:flutter/material.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-        home: const MyApp(),
-        routes: {
-      HomePage.id:(context) => const HomePage(),
-      SignInPage.id: (context) => const SignInPage(),
-      SignUpPage.id: (context) => const SignUpPage(),
-    }),
-  );
+import 'model/pref_model.dart';
+
+Future <void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().then((value) => print('Firebase ishga tushti'));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      // Initialize FlutterFire
-      future: Firebase.initializeApp(),
-      builder: (context, snapshot) {
-        // Check for errors
-        if (snapshot.hasError) {
-          return const Text('Something went wrong');
-        }
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
 
-        // Once complete, show your application
-        if (snapshot.connectionState == ConnectionState.done) {
-          return const SignInPage();
-        }
+        primarySwatch: Colors.blue,
+      ),
+      home:  _startPage(),
+      routes: {
+      HomePage.id:(context) => HomePage(),
+        SignInPage.id:(context) => SignInPage(),
+        SignUpPage.id:(context) => SignUpPage(),
+        DetailPage.id:(context) => DetailPage()
 
-        // Otherwise, show something whilst waiting for initialization to complete
-        return Utils.Loading();
       },
     );
   }
+
+  Widget _startPage(){
+    return StreamBuilder <User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (BuildContext context,snapshot){
+      if(snapshot.hasData){
+        Prefs.saveUserId(snapshot.data!.uid);
+        return HomePage();
+      }
+      else{
+        Prefs.removeUserId();
+        return const SignInPage();
+      }
+    });
+  }
 }
+

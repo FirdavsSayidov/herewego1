@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../model/pref_model.dart';
-import '../signIn_page.dart';
+import '../pages/signIn_page.dart';
 
 class AuthService{
   static final _auth = FirebaseAuth.instance;
@@ -10,7 +10,7 @@ class AuthService{
   static Future<User?> signinUser (BuildContext context, String email, String password) async{
     try {
       _auth.signInWithEmailAndPassword(email: email, password: password);
-      final User user = await _auth.currentUser!;
+      final User? user = await _auth.currentUser;
       print(user.toString());
       return user;
     }catch (e){

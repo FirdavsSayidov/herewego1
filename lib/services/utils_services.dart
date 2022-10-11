@@ -16,6 +16,6 @@ class Utils {
         fontSize: 16.0);
   }
   static Loading (){
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   }
 }

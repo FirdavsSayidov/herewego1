@@ -22,9 +22,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
+
       _apiGetPosts();
-    });
   }
 
   Future _openDetail() async{
@@ -45,6 +44,7 @@ class _HomePageState extends State<HomePage> {
     });
     var id = await Prefs.loadUserId();
     RTDBService.getAllPosts(id!).then((posts) => {
+      print(posts),
       _respPosts(posts),
     });
   }

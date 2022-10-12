@@ -10,14 +10,16 @@ class RTDBService with ChangeNotifier {
     return _database.onChildAdded;
   }
 
-  static List<Post> items = [];
+
   static Future<List<Post>> getAllPosts(String id) async {
-    final query = _database.child("posts");
+    List<Post> items = [];
+
+    Query query = _database.child("posts");
     await query.once().then((snapshot) {
       final v = snapshot.snapshot.children;
       for(var i in v){
         Map map = i.value as Map;
-        items.add(Post(map['userId'],map['title'],map['content']));
+        items.add(Post(map['userId'],map['content'],map['title']));
       }
     });
     return items;

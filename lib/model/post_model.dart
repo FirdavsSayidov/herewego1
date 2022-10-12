@@ -3,6 +3,7 @@ class Post {
   String title;
   String content;
 
+
   Post( this.userId,this.title,this.content);
 
   Post.fromJson(Map<String, dynamic> json)

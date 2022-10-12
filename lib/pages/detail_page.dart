@@ -24,7 +24,7 @@ class _DetailPageState extends State<DetailPage> {
 
   _apiAddPost(String title, String content) async {
     var id = await Prefs.loadUserId();
-    RTDBService.addPost(Post(id!, title, content)).then((value) => {
+    RTDBService.addPost(Post(id!, title, content)).then((_) => {
       _respAddPost(),
     });
   }

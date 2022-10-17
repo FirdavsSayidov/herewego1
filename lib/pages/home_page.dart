@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   Future _openDetail() async{
     Map results = await Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context){
-          return  DetailPage();
+          return  const DetailPage();
         }
     ));
     if(results != null && results.containsKey("data")){
@@ -100,9 +100,9 @@ class _HomePageState extends State<HomePage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(post.title,style: TextStyle(color: Colors.black,fontSize: 20),),
+              Text(post.title,style: const TextStyle(color: Colors.black,fontSize: 20),),
               SizedBox(height: 10,),
-              Text(post.content,style: TextStyle(color: Colors.black,fontSize: 16),),
+              Text(post.content,style: const TextStyle(color: Colors.black,fontSize: 16),),
             ],
           ),
         ],

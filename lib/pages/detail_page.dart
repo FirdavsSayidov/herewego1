@@ -86,8 +86,8 @@ class _DetailPageState extends State<DetailPage> {
                     child: SizedBox(
                       width: 100,
                       height: 100,
-                      child: //_image != null ?
-                    //  Image.file(_image!,fit: BoxFit.cover) :
+                      child: _image != null ?
+                      Image.file(_image!,fit: BoxFit.cover) :
                       Image.asset("assets/images/image.png"),
                     ),
                   ),

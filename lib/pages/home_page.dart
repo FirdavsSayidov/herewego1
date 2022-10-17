@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   Future _openDetail() async{
     Map results = await Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context){
-          return const DetailPage();
+          return  DetailPage();
         }
     ));
     if(results != null && results.containsKey("data")){
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView.builder(
         itemCount: items.length,
         itemBuilder: (ctx,i){
-          return itemsList(items[i]);
+          return itemOfList(items[i]);
         },
       ),
 
@@ -82,22 +82,30 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  Widget itemsList(Post post){
+  Widget itemOfList(Post post){
     return Container(
-      padding: EdgeInsets.all( 30),
-      child: Column(mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: EdgeInsets.all(20),
+      child: Row(
         children: [
-         // Text(post.firstname,style: TextStyle(fontSize: 20),),
-          const SizedBox(height: 10,),
-        Text(post.title,style: TextStyle(fontSize: 16),),
-          SizedBox(height: 10,),
-          Text(post.content,style: TextStyle(fontSize: 13),),
-          SizedBox(height: 10,),
 
-        // Text(post.content)
+          Container(
+            height: 70,
+            width: 70,
+            child: post.image != null ?
+            Image.network(post.image,fit: BoxFit.cover,):
+            Image.asset("assets/images/ic_default.png"),
+          ),
+          SizedBox(width: 15,),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(post.title,style: TextStyle(color: Colors.black,fontSize: 20),),
+              SizedBox(height: 10,),
+              Text(post.content,style: TextStyle(color: Colors.black,fontSize: 16),),
+            ],
+          ),
         ],
       ),
     );
-  }
-}
+  }}

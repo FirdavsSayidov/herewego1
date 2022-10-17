@@ -19,7 +19,7 @@ class RTDBService with ChangeNotifier {
       final v = snapshot.snapshot.children;
       for(var i in v){
         Map map = i.value as Map;
-        items.add(Post(map['userId'],map['content'],map['title']));
+        items.add(Post(map['userId'],map['content'],map['title'],map['image']));
       }
     });
     return items;

@@ -106,7 +106,7 @@ class _DetailPageState extends State<DetailPage> {
                   TextField(
                     controller: contentController,
                     decoration: InputDecoration(
-                      hintText: "Content",
+                      hintText: "Content ",
                     ),
                   ),
                   SizedBox(
